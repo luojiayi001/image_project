@@ -119,7 +119,7 @@ end
 % new_g = Get_small(g);
 % 
 % Plot the extracted particle surface
-new_g = Get_small(g, 1); % 0:not-visited 1:visited 2:boundary
+new_g = Get_small(g, 2); % 0:not-visited 1:visited 2:boundary
 v = Extract_v(new_g); % Get all the vertex
 f = Extract_f(new_g); % Get all the faces
 plot_mesh(v, f, options); % Start plotting
@@ -127,6 +127,12 @@ options.face_vertex_color = 0.3*ones(size(v, 2), 1);
 clf;
 plot_mesh(v, f, options);
 fprintf("Error detection: %d\n", Error_detect(g));
+
+% newgraph G shortest path subroutine
+
+%
+
+
 
 % clf;
 % hold on;
