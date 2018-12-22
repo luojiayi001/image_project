@@ -182,7 +182,7 @@ for i = 1: size(g.faces, 2)
     if g.faces{i}.state == 2
         boundary_points = [boundary_points g.faces{i}.id];
     end
-    V_all = [V_all; g.faces{i}.center];
+    V_all = [V_all; g.faces{i}.center'];
 end
 % [costs,paths] = dijkstra(V_all,E_local, 1511, 2078);
 % 
