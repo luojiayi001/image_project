@@ -191,7 +191,7 @@ end
 %     c_l, p_l = dijkstra(V_all,E_local, start_point, boundary_points(i));
 % end
 
-count = optimize_path(E_local, E_global, V_all, boundary_points, 5, g); 
+optimize_path(E_local, E_global, V_all, boundary_points, 5, g); 
 % E_visited = [];
 % for i = 1:size(new_g.faces, 2)
 %     E_visited = [E_visited; i]

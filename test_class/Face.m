@@ -8,6 +8,7 @@ classdef Face
         neighbors % surrounded faces id
         center % coordinates of the center point
         ajac_faces % those faces that share only one node with this face
+        all_neighbors
     end
 end
 % ================================================================== %

@@ -1,0 +1,17 @@
+
+% bound_E: n by 2 matrix corresponds to the faces relationship within the boundary
+% global_E: n by 2 matrix corresponds to the faces relationship within the global domain
+% V: the coordinates for all the nodes
+% threshold: Use subtraction for threshold (absolute diff in distance)
+% In order to avoid local optimization, two points of which the distance between should be larger than threshold
+function c = optimize_path(E_local, E_global, V_all, g) 
+
+start_point = boundary_points(5);
+for i = 1: size(boundary_points, 2)
+    [c_l, p_l] = dijkstra(V_all,E_local, start_point, boundary_points(i));
+    [c_g, p_g] = dijkstra(V_all,E_global, start_point, boundary_points(i));
+    if abs(c_l - c_g) >= 2 && c_l ~= Inf
+        p_l
+        p_g
+    end
+end

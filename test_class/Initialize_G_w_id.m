@@ -1,4 +1,5 @@
-function g = Initialize_G(vertex, faces)
+% This function is aimed to create a subgraph with the same id
+function g = Initialize_G_w_id(vertex, vid, faces, fid, state)
 % Denote V = No. of vertex, F = No. of faces
 % vertex: 3 x V matrix for coordinates (x, y, z) of V vertices
 % faces:  3 x F matrix for vertex index (I1, I2, I3) of F faces
@@ -21,15 +22,17 @@ g = Graph;
 for i = 1:size(vertex, 2)
     temp = Node;
     temp.state = 0; % Initialize it as new node 
-    temp.id = i;
+%     temp.id = i;
+    temp.id = vid(i);
     temp.coor = vertex(:,i)';
     g.nodes{end + 1} = temp;
 end
 
 for i = 1:size(faces, 2)
     temp = Face;
-    temp.state = 0; % Initialize it as new face
-    temp.id = i;
+    temp.state = state; % Initialize it as new face
+%     temp.id = i;
+    temp.id = fid(i);
     temp.neighbors = face_rings{i};
     temp.norm = face_normals(:,i);
     temp.center = face_centers(:,i);

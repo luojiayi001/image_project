@@ -107,8 +107,7 @@ classdef Graph
                     temp = Face;
 %                     temp.id = idx;
                     temp.id = obj.faces{i}.id;
-%                     temp.state = 1;
-                    temp.state = state;
+                    temp.state = 1;
                     temp.norm = obj.faces{i}.norm;
                     temp.center = obj.faces{i}.center;
                     for j = 1 : size(obj.faces{i}.nodes, 2)
