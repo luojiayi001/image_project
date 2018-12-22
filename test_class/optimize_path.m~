@@ -1,17 +1,28 @@
+function [C, g] = optimize_path(E_local, E_global, V_all, boundary_points, threshold, g) 
+% count: how many local paths have been changed
+    C = 0;
+for j = 1: 1% size(boundary_points, 2)
+    start_point = boundary_points(j);
+    for i = 1: size(boundary_points, 2)
+%         1
+%         start_cor = V_all(start_point);
+%         end_cor = V_all(boundary_points(i));
+%         dist = (sum(start_cor - end_cor).^2)^0.5;
+%         if dist <= 10
+            [c_l, p_l] = dijkstra(V_all,E_local, start_point, boundary_points(i));
+            [c_g, p_g] = dijkstra(V_all, E_global, start_point, boundary_points(i));
+            if abs(c_l - c_g) >= 0.01 && c_l ~= Inf
+                C = C + 1;
+                % change the local path's faces state back to unvisited
+                for m = 1: size(p_l, 2)
+                    g.faces{p_l(m)}.state = 0;
+                end
 
-% bound_E: n by 2 matrix corresponds to the faces relationship within the boundary
-% global_E: n by 2 matrix corresponds to the faces relationship within the global domain
-% V: the coordinates for all the nodes
-% threshold: Use subtraction for threshold (absolute diff in distance)
-% In order to avoid local optimization, two points of which the distance between should be larger than threshold
-function c = optimize_path(E_local, E_global, V_all, g) 
-
-start_point = boundary_points(5);
-for i = 1: size(boundary_points, 2)
-    [c_l, p_l] = dijkstra(V_all,E_local, start_point, boundary_points(i));
-    [c_g, p_g] = dijkstra(V_all,E_global, start_point, boundary_points(i));
-    if abs(c_l - c_g) >= 2 && c_l ~= Inf
-        p_l
-        p_g
+                % change the global path's faces state to visited
+                for n = 1: size(p_g, 2)
+                    g.faces{p_l(n)}.state = 2;
+                end
+            end
+        end
     end
-end
+% end

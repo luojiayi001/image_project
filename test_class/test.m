@@ -191,7 +191,7 @@ end
 %     c_l, p_l = dijkstra(V_all,E_local, start_point, boundary_points(i));
 % end
 
-count = optimize_path(E_local, E_global, V_all, boundary_points, 5, g); 
+[count, g_new] = optimize_path(E_local, E_global, V_all, boundary_points, 0.001, g); 
 % E_visited = [];
 % for i = 1:size(new_g.faces, 2)
 %     E_visited = [E_visited; i]
@@ -203,9 +203,17 @@ count = optimize_path(E_local, E_global, V_all, boundary_points, 5, g);
 % quiver3(face_centers(1,id), face_centers(2,id), face_centers(3,id), face_normals(1,id), face_normals(2,id), 
 % face_normals(3,id),  'r'); % draw normal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% shading faceted; % display edges % shading interp; % display smooth surface 
-% colormap hot;  % colormap jet(256);
-% caxis([0 1]); % fix colormap range
+new_g1 = Get_small(g_new, 1); % 0:not-visited 1:visited 2:boundary
+% new_g2 = Get_small(g, 1);
+v = Extract_v(new_g1); % Get all the vertex
+f = Extract_f(new_g1); % Get all the faces
+plot_mesh(v, f, options); % Start plotting
+options.face_vertex_color = 0.3*ones(size(v, 2), 1);
+clf;
+plot_mesh(v, f, options);
+shading faceted; % display edges % shading interp; % display smooth surface 
+colormap hot;  % colormap jet(256);
+caxis([0 1]); % fix colormap range
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Completion subroutine
 
