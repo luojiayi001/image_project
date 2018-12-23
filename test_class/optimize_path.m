@@ -3,7 +3,7 @@ function [C, g] = optimize_path(E_local, E_global, V_all, boundary_points, thres
     C = 0;
 
 for j = 1: 1% size(boundary_points, 2)
-    start_point = boundary_points(10);
+    start_point = boundary_points(100);
     for i = 1: size(boundary_points, 2)
 %         1
 %         start_cor = V_all(start_point);

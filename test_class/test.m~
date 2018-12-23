@@ -132,30 +132,30 @@ new_g = Get_small(g, 2); % 0:not-visited 1:visited 2:boundary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % newgraph G shortest path subroutine
 
-faces_new = [];
-faces_id = [];
-for i = 1:size(new_g.faces, 2)
-    faces_new = [faces_new new_g.faces{i}.nodes'];
-    faces_id = [faces_id new_g.faces{i}.id];
-end
+% faces_new = [];
+% faces_id = [];
+% for i = 1:size(new_g.faces, 2)
+%     faces_new = [faces_new new_g.faces{i}.nodes'];
+%     faces_id = [faces_id new_g.faces{i}.id];
+% end
+% 
+% vertex_new = [];
+% vertex_id = [];
+% for i = 1:size(new_g.nodes, 2)
+%     vertex_new = [vertex_new new_g.nodes{i}.coor'];
+%     vertex_id = [vertex_id new_g.nodes{i}.id];
+% end
 
-vertex_new = [];
-vertex_id = [];
-for i = 1:size(new_g.nodes, 2)
-    vertex_new = [vertex_new new_g.nodes{i}.coor'];
-    vertex_id = [vertex_id new_g.nodes{i}.id];
-end
-
-g1 = Initialize_G_w_id(vertex_new, vertex_id, faces_new, faces_id, 2);
-E_local = [];
-for i = 1: size(g1.faces, 2)
-    all_neighbor = g1.faces{i}.all_neighbors;
-    for j = 1: size(all_neighbor, 1)
-        if g.faces{all_neighbor(j)}.state == 2
-            E_local = [E_local; g1.faces{i}.id all_neighbor(j)];
-        end
-    end
-end
+% g1 = Initialize_G_w_id(vertex_new, vertex_id, faces_new, faces_id, 2);
+% E_local = [];
+% for i = 1: size(new_g.faces, 2)
+%     all_neighbor = new_g.faces{i}.all_neighbors;
+%     for j = 1: size(all_neighbor, 1)
+%         if g.faces{all_neighbor(j)}.state == 2
+%             E_local = [E_local; new_g.faces{i}.id all_neighbor(j)];
+%         end
+%     end
+% end
 
 % Get the corresponded E and V matrix
 
@@ -176,13 +176,11 @@ for i = 1: size(g.faces, 2)
     end
 end
 
-V_all = [];
 boundary_points = [];
 for i = 1: size(g.faces, 2)
     if g.faces{i}.state == 2
         boundary_points = [boundary_points g.faces{i}.id];
     end
-    V_all = [V_all; g.faces{i}.center'];
 end
 % [costs,paths] = dijkstra(V_all,E_local, 1511, 2078);
 % 
@@ -191,7 +189,7 @@ end
 %     c_l, p_l = dijkstra(V_all,E_local, start_point, boundary_points(i));
 % end
 
-[count, g_new] = optimize_path(E_local, E_global, V_all, boundary_points, 0.5, g); 
+[count, g_new] = optimize_path(E_local, E_global, faces', boundary_points, 0.001, g); 
 % E_visited = [];
 % for i = 1:size(new_g.faces, 2)
 %     E_visited = [E_visited; i]
@@ -203,7 +201,8 @@ end
 % quiver3(face_centers(1,id), face_centers(2,id), face_centers(3,id), face_normals(1,id), face_normals(2,id), 
 % face_normals(3,id),  'r'); % draw normal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-new_g1 = Get_small(g_new, 2); % 0:not-visited 1:visited 2:boundary
+new_g1 = Get_small(g_new, 1); % 0:not-visited 1:visited 2:boundary
+new_g2 = Get_small(g, 1);
 v = Extract_v(new_g1); % Get all the vertex
 f = Extract_f(new_g1); % Get all the faces
 plot_mesh(v, f, options); % Start plotting
